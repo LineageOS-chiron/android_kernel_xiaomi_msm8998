@@ -918,15 +918,6 @@ static long msm_isp_ioctl_unlocked(struct v4l2_subdev *sd,
 		rc = msm_isp_cfg_input(vfe_dev, arg);
 		mutex_unlock(&vfe_dev->core_mutex);
 		break;
-	case VIDIOC_MSM_ISP_AHB_CLK_CFG:
-		mutex_lock(&vfe_dev->core_mutex);
-		if (vfe_dev->hw_info->vfe_ops.core_ops.ahb_clk_cfg)
-			rc = vfe_dev->hw_info->vfe_ops.core_ops.
-					ahb_clk_cfg(vfe_dev, arg);
-		else
-			rc = -EOPNOTSUPP;
-		mutex_unlock(&vfe_dev->core_mutex);
-		break;
 	case VIDIOC_MSM_ISP_SET_DUAL_HW_MASTER_SLAVE:
 		mutex_lock(&vfe_dev->core_mutex);
 		rc = msm_isp_set_dual_HW_master_slave_mode(vfe_dev, arg);
