@@ -10,6 +10,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+#define DEBUG
+
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/firmware.h>
@@ -5951,6 +5953,8 @@ static int tasha_codec_enable_dec(struct snd_soc_dapm_widget *w,
 					    CF_MIN_3DB_150HZ << 5);
 		/* Enable TX PGA Mute */
 		snd_soc_update_bits(codec, tx_vol_ctl_reg, 0x10, 0x10);
+		/* Disable APC */
+		snd_soc_update_bits(codec, dec_cfg_reg, 0x08, 0x00);
 		break;
 	case SND_SOC_DAPM_POST_PMU:
 		snd_soc_update_bits(codec, hpf_gate_reg, 0x01, 0x00);
@@ -13909,6 +13913,9 @@ static int tasha_swrm_read(void *handle, int reg)
 		goto err;
 	}
 	ret = val;
+
+	dev_dbg(tasha->dev, "%s: Read soundwire register, value: 0x%x\n",
+    		__func__, ret);
 err:
 	/* read_unlock */
 	mutex_unlock(&tasha->swr_read_lock);
@@ -14377,6 +14384,13 @@ static int tasha_probe(struct platform_device *pdev)
 			__func__, "wcd_native_clk");
 	else
 		tasha->wcd_native_clk = wcd_native_clk;
+
+	/*
+     * Add 5msec delay to provide sufficient time for
+     * soundwire auto enumeration of slave devices as
+     * as per HW requirement.
+     */
+    usleep_range(5000, 5010);
 
 	if (wcd9xxx_get_intf_type() == WCD9XXX_INTERFACE_TYPE_SLIMBUS)
 		ret = snd_soc_register_codec(&pdev->dev, &soc_codec_dev_tasha,

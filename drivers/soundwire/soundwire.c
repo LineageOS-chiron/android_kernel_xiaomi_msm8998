@@ -22,6 +22,8 @@
 #include <linux/pm_runtime.h>
 #include <linux/soundwire/soundwire.h>
 
+#define DEBUG
+
 struct boardinfo {
 	struct list_head	list;
 	struct swr_boardinfo	board_info;

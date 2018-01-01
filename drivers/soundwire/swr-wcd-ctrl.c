@@ -29,6 +29,8 @@
 #include "swrm_registers.h"
 #include "swr-wcd-ctrl.h"
 
+#define DEBUG 1
+
 #define SWR_BROADCAST_CMD_ID            0x0F
 #define SWR_AUTO_SUSPEND_DELAY          3 /* delay in sec */
 #define SWR_DEV_ID_MASK			0xFFFFFFFF
