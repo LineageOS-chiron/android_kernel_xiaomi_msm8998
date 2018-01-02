@@ -12,6 +12,8 @@
  * GNU General Public License for more details.
  */
 
+#include "xiaomi/msm8998-pinctrl.dtsi"
+
 &soc {
 	led_flash0: qcom,camera-flash@0 {
 		cell-index = <0>;
