@@ -916,13 +916,17 @@ static struct snd_soc_dai *snd_soc_find_dai(
 			continue;
 		if (dlc->name && strcmp(component->name, dlc->name))
 			continue;
+        
+        dev_dbg(component->dev, "Found component %s for dai: %s\n", component->name, dlc->dai_name);
 		list_for_each_entry(dai, &component->dai_list, list) {
 			if (dlc->dai_name && strcmp(dai->name, dlc->dai_name))
 				continue;
-
+            dev_dbg(component->dev, "Found dai: %s\n", dlc->dai_name);
 			return dai;
 		}
 	}
+	
+	dev_dbg(component->dev, "Couldn't find component %s for dai: %s\n", dlc->name, dlc->dai_name);
 
 	return NULL;
 }
@@ -2766,6 +2770,7 @@ static void snd_soc_component_add_unlocked(struct snd_soc_component *component)
 			snd_soc_component_setup_regmap(component);
 	}
 
+	dev_dbg(component->dev, "Registered component %s\n", component->name); 
 	list_add(&component->list, &component_list);
 	INIT_LIST_HEAD(&component->dobj_list);
 }
