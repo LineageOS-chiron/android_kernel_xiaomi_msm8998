@@ -13,7 +13,6 @@
 
 #include <dt-bindings/interrupt-controller/irq.h>
 #include "msm8998-pinctrl.dtsi"
-#include "xiaomi/msm8998-pinctrl.dtsi"
 #include "chiron-camera-sensor-mtp.dtsi"
 / {
 	bluetooth: bt_wcn3990 {
@@ -866,6 +865,17 @@
 	status = "disabled";
 };
 
+&fp_d5_vdd_vreg {
+	regulator-always-on;
+};
+
+&pmi8998_wled {
+	qcom,led-strings-list = [00 01 02 03];
+	qcom,fs-curr-ua = <20000>;
+	qcom,en-cabc;
+	qcom,ovp-mv = <19600>;
+};
+
 /* Red led was used for powersupply of White led */
 &red_led {
 	qcom,start-idx = <1>;
@@ -896,6 +906,9 @@
 	qcom,fcc-hot-temp-delta = <1650000>;
 	qcom,fcc-cool-temp-delta = <2325000>;
 	qcom,auto-recharge-soc;
+    qcom,thermal-mitigation-dcp = <0x1b7740 0x186a00 0x155cc0 0x124f80 0xf4240 0xf4240 0xf4240>;
+    qcom,thermal-mitigation-qc3 = <0x2dc6c0 0x2500a8 0x206cc8 0x1bd8e8 0x174508 0x12b128 0xb71b0>;
+    qcom,thermal-mitigation-qc2 = <0x186a00 0x155cc0 0x124f80 0xf4240 0xdbba0 0xdbba0 0x86470>;
 };
 &pmi8998_fg {
 	qcom,fg-force-load-profile;
@@ -913,9 +926,9 @@
 /{
 	mtp_batterydata: qcom,battery-data {
 		qcom,batt-id-range-pct = <15>;
-		#include "xiaomi/batterydata-chiron-atl-3400mAh.dtsi"
-		#include "xiaomi/batterydata-chiron-cos-3400mAh.dtsi"
-		#include "xiaomi/batterydata-itech-3020mAh.dtsi"
+		#include "batterydata-chiron-atl-3400mAh.dtsi"
+		#include "batterydata-chiron-cos-3400mAh.dtsi"
+		#include "batterydata-itech-3020mAh.dtsi"
 	};
 };
 

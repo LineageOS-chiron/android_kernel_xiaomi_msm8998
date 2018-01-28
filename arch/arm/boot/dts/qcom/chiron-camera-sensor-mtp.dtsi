@@ -12,8 +12,6 @@
  * GNU General Public License for more details.
  */
 
-#include "xiaomi/msm8998-pinctrl.dtsi"
-
 &soc {
 	led_flash0: qcom,camera-flash@0 {
 		cell-index = <0>;
@@ -65,10 +63,6 @@
 };
 
 &cci {
-    
-    /delete-node/qcom,actuator@1;
-    /delete-node/qcom,eeprom@1;
-    
 	actuator0: qcom,actuator@0 {
 		cell-index = <0>;
 		reg = <0x0>;
